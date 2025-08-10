@@ -1,0 +1,25 @@
+services:
+  backend:
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      - PGHOST=postgres
+      - PGPORT=5432
+      - PGUSER=postgres
+      - PGPASSWORD=tonpassword
+      - PGDATABASE=tesdb
+      - PORT=3000
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_PASSWORD: tonpassword
+      POSTGRES_DB: tesdb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
