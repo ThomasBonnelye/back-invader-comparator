@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { verifyGoogleToken, verifyAppleToken } from '../services/tokenVerifier';
+import { verifyGoogleToken, verifyAppleToken } from '../services/oauthService';
 
 export default async function verifyTokenMiddleware(
   req: Request,
