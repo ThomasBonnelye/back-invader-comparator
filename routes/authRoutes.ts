@@ -1,4 +1,3 @@
-// routes/authRoutes.ts
 import { Router } from 'express';
 import jwt from 'jsonwebtoken';
 import { verifyGoogleToken } from '../services/oauthService';
