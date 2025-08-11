@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { verifyGoogleToken, verifyAppleToken } from '../services/oauthService';
+import { verifyGoogleToken } from '../services/oauthService';
 
 export default async function verifyTokenMiddleware(
   req: Request,
@@ -21,17 +21,11 @@ export default async function verifyTokenMiddleware(
         provider: 'google',
       };
       return next();
-    } catch {
-      // Essaye Apple
-      const decoded = await verifyAppleToken(token);
-      req.user = {
-        id: decoded.sub as string,
-        email: decoded.email as string,
-        provider: 'apple',
-      };
-      return next();
-    }
-  } catch (err: any) {
+    }catch (err: any) {
     return res.status(401).json({ error: 'Token invalide : ' + err.message });
+  }
+  } catch (err) {
+    console.error('Erreur de vérification du token:', err);
+    return res.status(500).json({ error: 'Erreur serveur' });
   }
 }
